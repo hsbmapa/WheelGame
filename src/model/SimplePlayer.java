@@ -74,12 +74,7 @@ public class SimplePlayer implements Player {
 
     @Override
     public String toString() {
-        return "SimplePlayer{" +
-                "playerName='" + playerName + '\'' +
-                ", playerId='" + playerId + '\'' +
-                ", points=" + points +
-                ", bet=" + bet +
-                ", betType=" + betType +
-                '}';
+        return String.format("\nPlayer: id:%s, name=%s, bet=%s, betType=%s, points=%s", playerId, playerName, bet,
+                betType, points);
     }
 }
