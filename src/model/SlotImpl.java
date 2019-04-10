@@ -56,6 +56,8 @@ public class SlotImpl implements Slot {
 
     @Override
     public String toString() {
-        return String.format("Position: %s, Color: %s, Number: %s", position, color, number);
+        String colour = color.name();
+        colour = colour.substring(0, 1).toUpperCase() + colour.substring(1).toLowerCase();
+        return String.format("Position: %s, Color: %s, Number: %s", position, colour, number);
     }
 }
