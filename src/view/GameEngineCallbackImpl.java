@@ -1,8 +1,6 @@
 package view;
 
-import model.enumeration.BetType;
 import model.interfaces.GameEngine;
-import model.interfaces.Player;
 import model.interfaces.Slot;
 import view.interfaces.GameEngineCallback;
 
@@ -33,8 +31,13 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
         int pos = slot.getPosition();
         int num = slot.getNumber();
         model.enumeration.Color col = slot.getColor();
-        logger.log(Level.FINE, String.format("Position: %s, Color: %s, Number: %s", pos, col, num));
+        //making color proper case
+        String colour = col.name();
+        colour = colour.substring(0, 1).toUpperCase() + colour.substring(1).toLowerCase();
+        String result = String.format("Position: %s, Color: %s, Number: %s", pos, colour, num);
+        logger.log(Level.FINE, result);
     }
+
 
     @Override
     public void result(Slot result, GameEngine engine) {
@@ -43,20 +46,14 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
         int pos = result.getPosition();
         int num = result.getNumber();
         model.enumeration.Color col = result.getColor();
-        logger.log(Level.INFO, String.format("RESULT = Position: %s, Color: %s, Number: %s\n", pos, col, num));
+        //making color proper case
+        String colour = col.name();
+        colour = colour.substring(0, 1).toUpperCase() + colour.substring(1).toLowerCase();
+        logger.log(Level.INFO, String.format("RESULT = Position: %s, Color: %s, Number: %s\n", pos, colour, num));
         engine.calculateResult(result);
         logger.log(Level.INFO, "FINAL PLAYER POINT BALANCES");
-        String results = "";
-        for (Player player : engine.getAllPlayers()) {
-            String id = player.getPlayerId();
-            String name = player.getPlayerName();
-            int bet = player.getBet();
-            BetType betType = player.getBetType();
-            int points = player.getPoints();
-            results += String.format("\nPlayer: id:%s, name=%s, bet=%s, betType=%s, points=%s",
-                    id, name, bet, betType, points);
-        }
-        logger.log(Level.INFO, results);
-
+        logger.log(Level.INFO, engine.getAllPlayers().toString().replace("[", "").replace("]", ""));
     }
+
+
 }
