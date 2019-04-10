@@ -64,9 +64,8 @@ public class SimpleTestClient {
 
         // TODO reset bets for next round if you were playing again
         for (Player player : players) {
-            if (player.getBet() > 0) {
-                player.resetBet();
-            }
+            gameEngine.removePlayer(player);
+            player.resetBet();
         }
     }
 
