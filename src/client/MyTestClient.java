@@ -26,6 +26,7 @@ import java.util.logging.Logger;
  */
 public class MyTestClient {
     private static final Logger logger = Logger.getLogger(MyTestClient.class.getName());
+    private static final int ROUNDS = 8;
 
     public static void main(String args[]) {
         final GameEngine gameEngine = new GameEngineImpl();
@@ -48,7 +49,7 @@ public class MyTestClient {
 
 
         // main loop to add players and place a bet
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < ROUNDS; i++) {
             int enumOrdinal = 0;
 
             for (Player player : players) {
