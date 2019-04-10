@@ -45,7 +45,7 @@ public class SimplePlayer implements Player {
 
     @Override
     public boolean setBet(int bet) {
-        if (bet >= 0 && bet < points) {
+        if (bet >= 0 && bet <= points) {
             this.bet = bet;
             return true;
         } else
@@ -72,4 +72,14 @@ public class SimplePlayer implements Player {
         this.bet = 0;
     }
 
+    @Override
+    public String toString() {
+        return "SimplePlayer{" +
+                "playerName='" + playerName + '\'' +
+                ", playerId='" + playerId + '\'' +
+                ", points=" + points +
+                ", bet=" + bet +
+                ", betType=" + betType +
+                '}';
+    }
 }
