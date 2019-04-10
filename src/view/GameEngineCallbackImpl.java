@@ -13,8 +13,10 @@ import java.util.logging.Logger;
  * @author Caspar Ryan
  * @see view.interfaces.GameEngineCallback
  */
+@SuppressWarnings("Duplicates")
 public class GameEngineCallbackImpl implements GameEngineCallback {
     private static final Logger logger = Logger.getLogger(GameEngineCallback.class.getName());
+
 
     public GameEngineCallbackImpl() {
         // FINE shows wheel spinning output, INFO only shows result
@@ -46,13 +48,14 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
         int pos = result.getPosition();
         int num = result.getNumber();
         model.enumeration.Color col = result.getColor();
-        //making color proper case
+        //making color title case
         String colour = col.name();
         colour = colour.substring(0, 1).toUpperCase() + colour.substring(1).toLowerCase();
         logger.log(Level.INFO, String.format("RESULT = Position: %s, Color: %s, Number: %s\n", pos, colour, num));
         engine.calculateResult(result);
         logger.log(Level.INFO, "FINAL PLAYER POINT BALANCES");
-        logger.log(Level.INFO, engine.getAllPlayers().toString().replace("[", "").replace("]", ""));
+        logger.log(Level.INFO, engine.getAllPlayers().toString().replace("[", "").replace("]",
+                ""));
     }
 
 
