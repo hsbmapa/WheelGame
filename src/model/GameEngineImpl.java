@@ -16,16 +16,17 @@ import java.util.Random;
 
 
 public class GameEngineImpl implements GameEngine {
-	private Map<String, Player> players = new HashMap<String, Player>();
-    private Collection<Slot> slots = new ArrayList<Slot>();
-    private Collection<GameEngineCallback> callbacks = new ArrayList<GameEngineCallback>();
+    private Map<String, Player> players = new HashMap<>();
+    private Collection<Slot> slots = new ArrayList<>();
+    private Collection<GameEngineCallback> callbacks = new ArrayList<>();
     private GameEngineCallback gameEngineCallback;
 
 
     @Override
     public void spin(int initialDelay, int finalDelay, int delayIncrement) {
         Random rand = new Random();
-        List<Slot> list = new ArrayList<Slot>(slots);
+        List<Slot> list = new ArrayList<>(slots);
+        //randomly choose a slot from wheel
         int i = rand.nextInt(Slot.WHEEL_SIZE);
         while (initialDelay < finalDelay) {
             if (i > Slot.WHEEL_SIZE - 1) {
@@ -48,7 +49,8 @@ public class GameEngineImpl implements GameEngine {
     @Override
 
     public void calculateResult(Slot winningSlot) {
-    	for (Player player : players.values()) {
+        //iterate through players and apply bet calculations through betting results
+        for (Player player : players.values()) {
             player.getBetType().applyWinLoss(player, winningSlot);
         }
     }
@@ -65,6 +67,7 @@ public class GameEngineImpl implements GameEngine {
                 return player;
             }
         }
+        //return nothing if player doens't exist in the hashmap
         return null;
     }
 
@@ -74,6 +77,7 @@ public class GameEngineImpl implements GameEngine {
             this.players.remove(player.getPlayerId());
             return true;
         } else {
+            //return false if there isn't a player matching the id
             return false;
         }
     }
@@ -96,9 +100,8 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public Collection<Player> getAllPlayers() {
-    	Collection<Player> playerArray = players.values();
-        return playerArray;
-    	
+        return players.values();
+
     }
 
     @Override
@@ -115,7 +118,7 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public Collection<Slot> getWheelSlots() {
-        int[] numbers = {00, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2, 0, 28, 9, 26, 30, 11,
+        int[] numbers = {0, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2, 0, 28, 9, 26, 30, 11,
                 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1};
         Color[] colors = {Color.GREEN00, Color.RED, Color.BLACK, Color.RED, Color.BLACK, Color.RED, Color.BLACK,
                 Color.RED, Color.BLACK, Color.RED, Color.BLACK, Color.RED, Color.BLACK, Color.RED, Color.BLACK,
