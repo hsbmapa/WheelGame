@@ -48,7 +48,6 @@ public class GameEngineImpl implements GameEngine {
     @Override
 
     public void calculateResult(Slot winningSlot) {
-       //for (Player player : players) {
     	for (Player player : players.values()) {
             player.getBetType().applyWinLoss(player, winningSlot);
         }
@@ -57,7 +56,6 @@ public class GameEngineImpl implements GameEngine {
     @Override
     public void addPlayer(Player player) {
         this.players.put(player.getPlayerId(), player);
-    	//players.put(player.getPlayerId(), player);
     }
 
     @Override
