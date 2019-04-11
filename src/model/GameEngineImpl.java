@@ -9,21 +9,23 @@ import view.interfaces.GameEngineCallback;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
 public class GameEngineImpl implements GameEngine {
-    Collection<Player> players = new ArrayList<Player>();
-    Collection<Slot> slots = new ArrayList<Slot>();
-    Collection<GameEngineCallback> callbacks = new ArrayList<GameEngineCallback>();
-    GameEngineCallback gameEngineCallback;
+	private Map<String, Player> players = new HashMap<String, Player>();
+    private Collection<Slot> slots = new ArrayList<Slot>();
+    private Collection<GameEngineCallback> callbacks = new ArrayList<GameEngineCallback>();
+    private GameEngineCallback gameEngineCallback;
 
 
     @Override
     public void spin(int initialDelay, int finalDelay, int delayIncrement) {
         Random rand = new Random();
-        List list = new ArrayList(slots);
+        List<Slot> list = new ArrayList<Slot>(slots);
         int i = rand.nextInt(Slot.WHEEL_SIZE);
         while (initialDelay < finalDelay) {
             if (i > Slot.WHEEL_SIZE - 1) {
@@ -46,19 +48,21 @@ public class GameEngineImpl implements GameEngine {
     @Override
 
     public void calculateResult(Slot winningSlot) {
-        for (Player player : players) {
+       //for (Player player : players) {
+    	for (Player player : players.values()) {
             player.getBetType().applyWinLoss(player, winningSlot);
         }
     }
 
     @Override
     public void addPlayer(Player player) {
-        this.players.add(player);
+        this.players.put(player.getPlayerId(), player);
+    	//players.put(player.getPlayerId(), player);
     }
 
     @Override
     public Player getPlayer(String playerId) {
-        for (Player player : players) {
+        for (Player player : players.values()) {
             if (player.getPlayerId().contentEquals(playerId)) {
                 return player;
             }
@@ -68,8 +72,8 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public boolean removePlayer(Player player) {
-        if (this.players.contains(player)) {
-            this.players.remove(player);
+        if (this.players.containsValue(player)) {
+            this.players.remove(player.getPlayerId());
             return true;
         } else {
             return false;
@@ -79,6 +83,8 @@ public class GameEngineImpl implements GameEngine {
     @Override
     public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
         this.gameEngineCallback = gameEngineCallback;
+        this.callbacks.add(gameEngineCallback);
+
     }
 
     @Override
@@ -92,7 +98,9 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public Collection<Player> getAllPlayers() {
-        return this.players;
+    	Collection<Player> playerArray = players.values();
+        return playerArray;
+    	
     }
 
     @Override
